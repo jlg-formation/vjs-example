@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import FormAsyncBtn from '@/components/FormAsyncBtn.vue'
+import { sleep } from '@/utils'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import type { NewArticle } from '../interfaces/Article'
 import { ref } from 'vue'
-import { useArticleStore } from '../store/articleStore'
 import { useRouter } from 'vue-router'
+import type { NewArticle } from '../interfaces/Article'
+import { useArticleStore } from '../store/articleStore'
 
 const newArticle = ref<NewArticle>({ name: 'xxx', price: 0, qty: 0 })
 
@@ -12,17 +13,33 @@ const articleStore = useArticleStore()
 
 const router = useRouter()
 
+const isSubmiting = ref(false)
+
+const errorMsg = ref('')
+
 const handleSubmit = async () => {
-  console.log('submit form')
-  await articleStore.add(newArticle.value)
-  router.push('/stock')
+  try {
+    console.log('submit form')
+    errorMsg.value = ''
+    isSubmiting.value = true
+    await sleep(2000)
+    await articleStore.add(newArticle.value)
+    await router.push('/stock')
+  } catch (err) {
+    console.log('err: ', err)
+    errorMsg.value = 'Problème technique'
+  } finally {
+    isSubmiting.value = false
+  }
 }
+
+const addForm = ref<HTMLFormElement>()
 </script>
 
 <template>
   <main>
     <h1>Ajouter un article</h1>
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmit" ref="addForm">
       <label>
         <span>Nom</span>
         <input type="text" v-model="newArticle.name" />
@@ -38,11 +55,12 @@ const handleSubmit = async () => {
         <input type="number" v-model="newArticle.qty" />
         <span class="error"></span>
       </label>
-      <div class="error"></div>
-      <button class="primary">
-        <FontAwesomeIcon :icon="faPlus" />
+      <div class="error">
+        {{ errorMsg }}
+      </div>
+      <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting">
         <span>Ajouter</span>
-      </button>
+      </FormAsyncBtn>
     </form>
   </main>
 </template>
@@ -73,6 +91,10 @@ form {
 
   div.error {
     height: 3em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

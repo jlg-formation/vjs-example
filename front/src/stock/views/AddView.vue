@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { NewArticle } from '../interfaces/Article'
 import { useArticleStore } from '../store/articleStore'
+import { newArticleValidate } from '../newArticle.validation'
 
 const newArticle = ref<NewArticle>({ name: 'xxx', price: 0, qty: 0 })
 const articleStore = useArticleStore()
@@ -30,15 +31,9 @@ const handleSubmit = async () => {
   }
 }
 
-const nameErrorMsg = computed(() => {
-  if (newArticle.value.name === '') {
-    return 'Champ requis'
-  }
-  if (newArticle.value.name.length > 10) {
-    return `Champ trop long (${newArticle.value.name.length}>10)`
-  }
-  return ''
-})
+const nameErrorMsg = computed(() => newArticleValidate('name', newArticle.value))
+const priceErrorMsg = computed(() => newArticleValidate('price', newArticle.value))
+const qtyErrorMsg = computed(() => newArticleValidate('qty', newArticle.value))
 </script>
 
 <template>
@@ -55,12 +50,14 @@ const nameErrorMsg = computed(() => {
       <label>
         <span>Prix</span>
         <input type="number" v-model="newArticle.price" />
-        <span class="error"></span>
+        <span class="error"> {{ priceErrorMsg }}</span>
       </label>
       <label>
         <span>Quantité</span>
         <input type="number" v-model="newArticle.qty" />
-        <span class="error"></span>
+        <span class="error">
+          {{ qtyErrorMsg }}
+        </span>
       </label>
       <div class="error">
         {{ errorMsg }}

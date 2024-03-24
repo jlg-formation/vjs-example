@@ -4,13 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
 
 <template>
-  <main>
-    <h1>Gérez efficacement votre stock&nbsp;!</h1>
-    <RouterLink to="/stock" class="button primary">
-      <span>Voir le stock</span>
-      <FontAwesomeIcon :icon="faAngleRight" />
-    </RouterLink>
-  </main>
+  <div class="page">
+    <main>
+      <h1>Gérez efficacement votre stock&nbsp;!</h1>
+      <RouterLink to="/stock" class="button primary">
+        <span>Voir le stock</span>
+        <FontAwesomeIcon :icon="faAngleRight" />
+      </RouterLink>
+    </main>
+  </div>
 </template>
 
 <style scoped>

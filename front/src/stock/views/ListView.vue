@@ -55,56 +55,58 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main>
-    <h1>Liste des articles</h1>
-    <div class="content">
-      <nav>
-        <AsyncBtn
-          label="Rafraîchir"
-          :action="handleRefresh"
-          :icon="faRotateRight"
-          @onstart="resetErrorMsg"
-          @onerror="setErrorMsg"
-        />
-        <RouterLink to="/stock/add" class="button" title="Ajouter">
-          <FontAwesomeIcon :icon="faPlus" />
-        </RouterLink>
+  <div class="page">
+    <main>
+      <h1>Liste des articles</h1>
+      <div class="content">
+        <nav>
+          <AsyncBtn
+            label="Rafraîchir"
+            :action="handleRefresh"
+            :icon="faRotateRight"
+            @onstart="resetErrorMsg"
+            @onerror="setErrorMsg"
+          />
+          <RouterLink to="/stock/add" class="button" title="Ajouter">
+            <FontAwesomeIcon :icon="faPlus" />
+          </RouterLink>
 
-        <AsyncBtn
-          :hidden="selectedArticles.size === 0"
-          label="Supprimer"
-          :action="handleRemove"
-          :icon="faTrashAlt"
-          @onstart="resetErrorMsg"
-          @onerror="setErrorMsg"
-        />
-      </nav>
-      <div class="error">
-        {{ errorMsg }}
+          <AsyncBtn
+            :hidden="selectedArticles.size === 0"
+            label="Supprimer"
+            :action="handleRemove"
+            :icon="faTrashAlt"
+            @onstart="resetErrorMsg"
+            @onerror="setErrorMsg"
+          />
+        </nav>
+        <div class="error">
+          {{ errorMsg }}
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th class="name">Nom</th>
+              <th class="price">Prix</th>
+              <th class="qty">Quantité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="a in articleStore.articles"
+              :key="a.id"
+              @click="handleSelect(a)"
+              :class="{ selected: selectedArticles.has(a.id) }"
+            >
+              <td class="name">{{ a.name }}</td>
+              <td class="price">{{ a.price }} €</td>
+              <td class="qty">{{ a.qty }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th class="name">Nom</th>
-            <th class="price">Prix</th>
-            <th class="qty">Quantité</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="a in articleStore.articles"
-            :key="a.id"
-            @click="handleSelect(a)"
-            :class="{ selected: selectedArticles.has(a.id) }"
-          >
-            <td class="name">{{ a.name }}</td>
-            <td class="price">{{ a.price }} €</td>
-            <td class="qty">{{ a.qty }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <style scoped>

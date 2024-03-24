@@ -36,36 +36,38 @@ const isInvalid = computed(() => isFormInvalid(validation.value))
 </script>
 
 <template>
-  <main>
-    <h1>Ajouter un article</h1>
-    <form @submit.prevent="handleSubmit" ref="addForm">
-      <label>
-        <span>Nom</span>
-        <input type="text" v-model="newArticle.name" :class="{ invalid: validation.name }" />
-        <span class="error">
-          {{ validation.name }}
-        </span>
-      </label>
-      <label>
-        <span>Prix</span>
-        <input type="number" v-model="newArticle.price" :class="{ invalid: validation.price }" />
-        <span class="error"> {{ validation.price }}</span>
-      </label>
-      <label>
-        <span>Quantité</span>
-        <input type="number" v-model="newArticle.qty" :class="{ invalid: validation.qty }" />
-        <span class="error">
-          {{ validation.qty }}
-        </span>
-      </label>
-      <div class="error">
-        {{ errorMsg }}
-      </div>
-      <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting" :isDisabled="isInvalid">
-        <span>Ajouter</span>
-      </FormAsyncBtn>
-    </form>
-  </main>
+  <div class="page">
+    <main>
+      <h1>Ajouter un article</h1>
+      <form @submit.prevent="handleSubmit" ref="addForm">
+        <label>
+          <span>Nom</span>
+          <input type="text" v-model="newArticle.name" :class="{ invalid: validation.name }" />
+          <span class="error">
+            {{ validation.name }}
+          </span>
+        </label>
+        <label>
+          <span>Prix</span>
+          <input type="number" v-model="newArticle.price" :class="{ invalid: validation.price }" />
+          <span class="error"> {{ validation.price }}</span>
+        </label>
+        <label>
+          <span>Quantité</span>
+          <input type="number" v-model="newArticle.qty" :class="{ invalid: validation.qty }" />
+          <span class="error">
+            {{ validation.qty }}
+          </span>
+        </label>
+        <div class="error">
+          {{ errorMsg }}
+        </div>
+        <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting" :isDisabled="isInvalid">
+          <span>Ajouter</span>
+        </FormAsyncBtn>
+      </form>
+    </main>
+  </div>
 </template>
 
 <style scoped>

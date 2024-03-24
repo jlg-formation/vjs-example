@@ -14,7 +14,6 @@ const articleStore = useArticleStore()
 const router = useRouter()
 
 const isSubmiting = ref(false)
-
 const errorMsg = ref('')
 
 const handleSubmit = async () => {

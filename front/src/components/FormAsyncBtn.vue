@@ -2,14 +2,10 @@
 import { faCircleNotch, type IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { onMounted } from 'vue'
-
 const props = defineProps<{
   icon: IconDefinition
   isSubmiting: boolean
 }>()
-
-onMounted(() => {})
 </script>
 
 <template>

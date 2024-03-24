@@ -2,15 +2,13 @@
 import FormAsyncBtn from '@/components/FormAsyncBtn.vue'
 import { sleep } from '@/utils'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { NewArticle } from '../interfaces/Article'
 import { useArticleStore } from '../store/articleStore'
 
 const newArticle = ref<NewArticle>({ name: 'xxx', price: 0, qty: 0 })
-
 const articleStore = useArticleStore()
-
 const router = useRouter()
 
 const isSubmiting = ref(false)
@@ -32,7 +30,15 @@ const handleSubmit = async () => {
   }
 }
 
-const addForm = ref<HTMLFormElement>()
+const nameErrorMsg = computed(() => {
+  if (newArticle.value.name === '') {
+    return 'Champ requis'
+  }
+  if (newArticle.value.name.length > 10) {
+    return `Champ trop long (${newArticle.value.name.length}>10)`
+  }
+  return ''
+})
 </script>
 
 <template>
@@ -42,7 +48,9 @@ const addForm = ref<HTMLFormElement>()
       <label>
         <span>Nom</span>
         <input type="text" v-model="newArticle.name" />
-        <span class="error"></span>
+        <span class="error">
+          {{ nameErrorMsg }}
+        </span>
       </label>
       <label>
         <span>Prix</span>
@@ -85,6 +93,7 @@ form {
 
     span.error {
       height: 1em;
+      font-weight: bold;
     }
   }
 

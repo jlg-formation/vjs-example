@@ -20,7 +20,7 @@ const handleSubmit = async () => {
     console.log('submit form')
     errorMsg.value = ''
     isSubmiting.value = true
-    await sleep(2000)
+    await sleep(300)
     await articleStore.add(newArticle.value)
     await router.push('/stock')
   } catch (err) {

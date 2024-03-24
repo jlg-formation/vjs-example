@@ -92,16 +92,18 @@ onMounted(async () => {
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="a in articleStore.articles"
-              :key="a.id"
-              @click="handleSelect(a)"
-              :class="{ selected: selectedArticles.has(a.id) }"
-            >
-              <td class="name">{{ a.name }}</td>
-              <td class="price">{{ a.price }} €</td>
-              <td class="qty">{{ a.qty }}</td>
-            </tr>
+            <TransitionGroup name="list">
+              <tr
+                v-for="a in articleStore.articles"
+                :key="a.id"
+                @click="handleSelect(a)"
+                :class="{ selected: selectedArticles.has(a.id) }"
+              >
+                <td class="name">{{ a.name }}</td>
+                <td class="price">{{ a.price }} €</td>
+                <td class="qty">{{ a.qty }}</td>
+              </tr>
+            </TransitionGroup>
           </tbody>
         </table>
       </div>

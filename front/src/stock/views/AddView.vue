@@ -5,8 +5,8 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { NewArticle } from '../interfaces/Article'
+import { getNewArticleValidationObject, isFormInvalid } from '../newArticle.validation'
 import { useArticleStore } from '../store/articleStore'
-import { newArticleValidate } from '../newArticle.validation'
 
 const newArticle = ref<NewArticle>({ name: 'xxx', price: 0, qty: 0 })
 const articleStore = useArticleStore()
@@ -31,9 +31,8 @@ const handleSubmit = async () => {
   }
 }
 
-const nameErrorMsg = computed(() => newArticleValidate('name', newArticle.value))
-const priceErrorMsg = computed(() => newArticleValidate('price', newArticle.value))
-const qtyErrorMsg = computed(() => newArticleValidate('qty', newArticle.value))
+const validation = computed(() => getNewArticleValidationObject(newArticle.value))
+const isInvalid = computed(() => isFormInvalid(validation.value))
 </script>
 
 <template>
@@ -42,27 +41,27 @@ const qtyErrorMsg = computed(() => newArticleValidate('qty', newArticle.value))
     <form @submit.prevent="handleSubmit" ref="addForm">
       <label>
         <span>Nom</span>
-        <input type="text" v-model="newArticle.name" />
+        <input type="text" v-model="newArticle.name" :class="{ invalid: validation.name }" />
         <span class="error">
-          {{ nameErrorMsg }}
+          {{ validation.name }}
         </span>
       </label>
       <label>
         <span>Prix</span>
-        <input type="number" v-model="newArticle.price" />
-        <span class="error"> {{ priceErrorMsg }}</span>
+        <input type="number" v-model="newArticle.price" :class="{ invalid: validation.price }" />
+        <span class="error"> {{ validation.price }}</span>
       </label>
       <label>
         <span>Quantité</span>
-        <input type="number" v-model="newArticle.qty" />
+        <input type="number" v-model="newArticle.qty" :class="{ invalid: validation.qty }" />
         <span class="error">
-          {{ qtyErrorMsg }}
+          {{ validation.qty }}
         </span>
       </label>
       <div class="error">
         {{ errorMsg }}
       </div>
-      <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting">
+      <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting" :disabled="isInvalid">
         <span>Ajouter</span>
       </FormAsyncBtn>
     </form>
@@ -86,6 +85,10 @@ form {
       padding: 0.5em 1em;
       border: 0.1em solid #aaa;
       border-radius: 0.3em;
+      &.invalid {
+        border-color: tomato;
+        outline-color: tomato;
+      }
     }
 
     span.error {

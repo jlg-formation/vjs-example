@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 const props = defineProps<{
   icon: IconDefinition
   isSubmiting: boolean
+  isDisabled: boolean
 }>()
 </script>
 
 <template>
-  <button class="primary" type="submit" :disabled="props.isSubmiting">
+  <button class="primary" type="submit" :disabled="props.isSubmiting || props.isDisabled">
     <FontAwesomeIcon
       :icon="props.isSubmiting ? faCircleNotch : props.icon"
       :spin="props.isSubmiting"

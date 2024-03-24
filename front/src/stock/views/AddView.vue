@@ -61,7 +61,7 @@ const isInvalid = computed(() => isFormInvalid(validation.value))
       <div class="error">
         {{ errorMsg }}
       </div>
-      <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting" :disabled="isInvalid">
+      <FormAsyncBtn :icon="faPlus" :isSubmiting="isSubmiting" :isDisabled="isInvalid">
         <span>Ajouter</span>
       </FormAsyncBtn>
     </form>

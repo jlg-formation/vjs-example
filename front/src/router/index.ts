@@ -1,4 +1,4 @@
-import { stockRoute } from '@/stock/router'
+import { checkStockGuards, stockRoute } from '@/stock/router'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -25,5 +25,7 @@ const router = createRouter({
     }
   ]
 })
+
+router.beforeEach(checkStockGuards)
 
 export default router

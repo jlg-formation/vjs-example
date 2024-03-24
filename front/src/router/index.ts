@@ -1,3 +1,4 @@
+import { stockRoutes } from '@/stock/router'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -16,6 +17,11 @@ const router = createRouter({
       // this generates a separate chunk (Legal.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/LegalView.vue')
+    },
+    ...stockRoutes,
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     }
   ]
 })

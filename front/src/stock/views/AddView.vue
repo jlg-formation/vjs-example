@@ -2,7 +2,7 @@
 import FormAsyncBtn from '@/components/FormAsyncBtn.vue'
 import { sleep } from '@/utils'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { NewArticle } from '../interfaces/Article'
 import { getNewArticleValidationObject, isFormInvalid } from '../newArticle.validation'
@@ -49,7 +49,12 @@ const checkQtyInput = (event: KeyboardEvent) => {
       <form @submit.prevent="handleSubmit" ref="addForm">
         <label>
           <span>Nom</span>
-          <input type="text" v-model="newArticle.name" :class="{ invalid: validation.name }" />
+          <input
+            type="text"
+            v-model="newArticle.name"
+            :class="{ invalid: validation.name }"
+            v-select
+          />
           <span class="error">
             {{ validation.name }}
           </span>

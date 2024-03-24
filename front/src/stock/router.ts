@@ -1,12 +1,20 @@
-export const stockRoutes = [
+import type { RouteRecordRaw } from 'vue-router'
+
+export const stockRoutes: RouteRecordRaw[] = [
   {
     path: '/stock',
     name: 'stock',
-    component: () => import('../stock/views/ListView.vue')
-  },
-  {
-    path: '/stock/add',
-    name: 'stock/add',
-    component: () => import('../stock/views/AddView.vue')
+    children: [
+      {
+        path: '',
+        name: 'list',
+        component: () => import('../stock/views/ListView.vue')
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('../stock/views/AddView.vue')
+      }
+    ]
   }
 ]

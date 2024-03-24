@@ -5,6 +5,9 @@ import { onMounted, ref } from 'vue'
 import AsyncBtn from '../../components/AsyncBtn.vue'
 import { type Article } from '../interfaces/Article'
 import { useArticleStore } from '../store/articleStore'
+import { useFilters } from '../../filter'
+
+const { currency } = useFilters()
 
 const errorMsg = ref('')
 
@@ -100,8 +103,8 @@ onMounted(async () => {
                 :class="{ selected: selectedArticles.has(a.id) }"
               >
                 <td class="name">{{ a.name }}</td>
-                <td class="price">{{ a.price }} €</td>
-                <td class="qty">{{ a.qty }}</td>
+                <td class="price number">{{ currency(a.price) }}</td>
+                <td class="qty number">{{ a.qty }}</td>
               </tr>
             </TransitionGroup>
           </tbody>
@@ -137,6 +140,10 @@ table {
   th,
   td {
     padding: 0.5em 1em;
+
+    &.number {
+      text-align: right;
+    }
   }
 
   tbody {

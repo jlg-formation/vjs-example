@@ -2,7 +2,7 @@
 import FormAsyncBtn from '@/components/FormAsyncBtn.vue'
 import { sleep } from '@/utils'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { NewArticle } from '../interfaces/Article'
 import { getNewArticleValidationObject, isFormInvalid } from '../newArticle.validation'
@@ -33,6 +33,13 @@ const handleSubmit = async () => {
 
 const validation = computed(() => getNewArticleValidationObject(newArticle.value))
 const isInvalid = computed(() => isFormInvalid(validation.value))
+
+const checkQtyInput = (event: KeyboardEvent) => {
+  console.log('event: ', event)
+  if (['.', 'e'].includes(event.key)) {
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -54,7 +61,13 @@ const isInvalid = computed(() => isFormInvalid(validation.value))
         </label>
         <label>
           <span>Quantité</span>
-          <input type="number" v-model="newArticle.qty" :class="{ invalid: validation.qty }" />
+          <input
+            type="number"
+            v-model="newArticle.qty"
+            :class="{ invalid: validation.qty }"
+            pattern="\d+"
+            @keypress="checkQtyInput"
+          />
           <span class="error">
             {{ validation.qty }}
           </span>

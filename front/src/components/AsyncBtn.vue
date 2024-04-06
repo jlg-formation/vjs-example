@@ -3,7 +3,7 @@ import { type IconDefinition, faCircleNotch } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { sleep } from '../utils'
 
-import { defineProps, ref } from 'vue'
+import { ref } from 'vue'
 const props = defineProps<{
   label: string
   icon: IconDefinition

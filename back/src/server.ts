@@ -1,5 +1,6 @@
 import express from "express";
 import serveIndex from "serve-index";
+import morgan from "morgan";
 
 import api from "./api";
 
@@ -7,16 +8,7 @@ const app = express();
 const port = 3000;
 const publicDir = "../front/dist";
 
-const log = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  console.log("this: ", this);
-  console.log("req: ", req.method, req.url);
-  next();
-};
-app.use(log);
+app.use(morgan("combined"));
 
 app.use("/api", api);
 

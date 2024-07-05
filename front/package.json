@@ -48,5 +48,8 @@
     "vite-plugin-vue-devtools": "^7.0.18",
     "vitest": "^1.4.0",
     "vue-tsc": "^2.0.6"
+  },
+  "volta": {
+    "node": "22.3.0"
   }
 }
